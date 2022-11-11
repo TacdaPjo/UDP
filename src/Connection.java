@@ -20,6 +20,7 @@ public class Connection extends Thread {
             //if(!in.readUTF().equals("Hej"))
             //out.writeUTF(in.readUTF());
             out.writeUTF("Hej ni lyckades komma in på mina server, grattis");
+            System.out.println("BIG DICK");
 
         } catch (IOException e) {
             e.printStackTrace();
