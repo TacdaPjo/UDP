@@ -2,15 +2,18 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
 
 
 public class Connection extends Thread {
     DataInputStream in;
     DataOutputStream out;
     Socket clientSocket;
+    ArrayList<Connection> subs;
 
-    public Connection(Socket aClientSocket) throws IOException {
+    public Connection(Socket aClientSocket, ArrayList<Connection> cons) throws IOException {
         this.clientSocket = aClientSocket;
+        this.subs=cons;
         this.in = new DataInputStream(clientSocket.getInputStream());
         this.out = new DataOutputStream(clientSocket.getOutputStream());
     }
@@ -27,10 +30,15 @@ public class Connection extends Thread {
 
     public void run() {
         try {
-            //if(!in.readUTF().equals("Hej"))
-            //out.writeUTF(in.readUTF());
-            out.writeUTF("Hej ni lyckades komma in på mina server, grattis");
-            System.out.println("BIG DICK");
+            while(true)
+            {
+                String msg = in.readUTF();
+                for(Connection c: subs)
+                {
+                    c.out.writeUTF(msg);
+                }
+            }
+
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,8 +1,10 @@
-import java.net.*;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Scanner;
 
-public class TCPClient {
+public class TCPClient2 {
 
     public static void main(String[] args) throws IOException {
 
@@ -19,10 +21,12 @@ public class TCPClient {
                 if (sc.hasNext()) {
                     message = sc.nextLine();
                     out.writeUTF(message);
-
+                    String data = in.readUTF();
+                    System.out.println("Received: " + data);
                 }
-                String data = in.readUTF();
-                System.out.println("Received: "+data);
+                if (message.equals("exit")) {
+                    s.close();
+                }
             }
 
 
