@@ -15,6 +15,16 @@ public class Connection extends Thread {
         this.out = new DataOutputStream(clientSocket.getOutputStream());
     }
 
+    public void msg()
+    {
+        try {
+            out.writeUTF("NEW MESSAGE");
+        }catch(IOException ioe)
+        {
+
+        }
+    }
+
     public void run() {
         try {
             //if(!in.readUTF().equals("Hej"))
