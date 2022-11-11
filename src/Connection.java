@@ -10,37 +10,53 @@ public class Connection extends Thread {
     DataOutputStream out;
     Socket clientSocket;
     ArrayList<Connection> subs;
+    TCPServer master;
+    String id;
 
-    public Connection(Socket aClientSocket, ArrayList<Connection> cons) throws IOException {
+    public Connection(Socket aClientSocket, TCPServer master) throws IOException {
         this.clientSocket = aClientSocket;
-        this.subs=cons;
+        this.master=master;
         this.in = new DataInputStream(clientSocket.getInputStream());
         this.out = new DataOutputStream(clientSocket.getOutputStream());
     }
 
-    public void msg()
+    public void setId(String id)
     {
-        try {
-            out.writeUTF("NEW MESSAGE");
-        }catch(IOException ioe)
-        {
-
-        }
+        this.id=id;
     }
 
     public void run() {
         try {
-            while(true)
-            {
+            while(true) {
+
                 String msg = in.readUTF();
-                for(Connection c: subs)
+
+                if(msg.contains("!joinPriv") || msg.contains("!sendPriv") || msg.contains("!quitPriv") || msg.contains("!ban") ) {
+                    System.out.println("JAG GÅR IN HIT");
+
+                    if(msg.contains("!ban"))
+                    {
+                        master.ban(msg.substring(5));
+                        System.out.println(msg.substring(5));
+                    }
+
+                    if (msg.contains("!joinPriv")) {
+                        master.joinPriv(this);
+                    }
+                    if (msg.contains("!quitPriv")) {
+                        master.leavePriv(this);
+                    }
+                    if (msg.contains("!sendPriv ")) {
+                        master.sendPriv(msg);
+                    }
+                }else
                 {
-                    c.out.writeUTF(msg);
+                    master.send(id+": "+msg);
                 }
+
+
             }
-
-
-        } catch (IOException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
         try {

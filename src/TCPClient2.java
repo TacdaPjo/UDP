@@ -15,17 +15,28 @@ public class TCPClient2 {
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
             Scanner sc = new Scanner(System.in);
             String message = "";
+            Thread rec = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(true)
+                    {
+                        try{
+                            String data = in.readUTF();
+                            System.out.println(data);
+                        }catch(IOException io)
+                        {}
+
+                    }
+                }
+            });
+            rec.start();
 
 
             while (true) {
                 if (sc.hasNext()) {
-                    message = sc.nextLine();
+                    message = "Client 1: "+sc.nextLine();
                     out.writeUTF(message);
-                    String data = in.readUTF();
-                    System.out.println("Received: " + data);
-                }
-                if (message.equals("exit")) {
-                    s.close();
+
                 }
             }
 
