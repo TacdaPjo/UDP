@@ -2,7 +2,7 @@ import java.net.*;
 import java.io.*;
 import java.util.Scanner;
 
-public class TCPClient {
+public class TCPClient3 {
 
     public static void main(String[] args) throws IOException {
         final Socket clientSocket;
@@ -18,7 +18,7 @@ public class TCPClient {
                 @Override
                 public void run() {
                     while(true){
-                    msg = sc.nextLine();
+                        msg = sc.nextLine();
                         try {
                             out.writeUTF(msg);
                             out.flush();
@@ -36,7 +36,7 @@ public class TCPClient {
                     try {
                         msg=in.readUTF();
                         while(msg!=null){
-                            System.out.println(clientSocket.getLocalPort() + ": " + msg);
+                            System.out.println("Server: " + msg);
                             msg = in.readUTF();
                         }
 
