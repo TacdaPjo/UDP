@@ -3,7 +3,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 
-
 public class Connection extends Thread {
     DataInputStream in;
     DataOutputStream out;
@@ -26,11 +25,11 @@ public class Connection extends Thread {
     }
 
     public void run() {
+
         try {
             //if(!in.readUTF().equals("Hej"))
             //out.writeUTF(in.readUTF());
-            out.writeUTF("Hej ni lyckades komma in på mina server, grattis");
-            System.out.println("BIG DICK");
+            out.writeUTF("Hej ni lyckades komma in på mina server, grattis"+ clientSocket.getInetAddress());
 
         } catch (IOException e) {
             e.printStackTrace();

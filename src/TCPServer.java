@@ -11,13 +11,11 @@ public class TCPServer extends Thread {
         ServerSocket listenSocket = new ServerSocket(PORT);
         ArrayList<Connection> cons = new ArrayList<Connection>();
         Socket socket = null;
-        new Connection(listenSocket.accept()).start();
 
         while (true) {
-            try{
-                socket = listenSocket.accept();
-            } catch (IOException e)
-            {
+            try {
+                new Connection(listenSocket.accept()).start();
+            } catch (IOException e) {
                 System.out.println("IOexcp" + e);
             }
             Connection temp = new Connection(socket);
