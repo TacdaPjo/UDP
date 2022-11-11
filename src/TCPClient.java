@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class TCPClient {
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         users a = new users();
         if (a.userID == 3) {
-            System.out.println("Welcome");
+            System.out.println("Welcome din hora");
         }
         //int port = 7896;
         while(true) {
